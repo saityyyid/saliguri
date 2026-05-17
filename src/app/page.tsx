@@ -99,8 +99,13 @@ export default async function HomePage() {
             <iframe
               title="Peta Saliguri Harau Cottage"
               className="h-96 w-full rounded-3xl border border-slate-200"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.8105955848246!2d100.67013897521998!3d-0.11274663546988793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e2aad98a705f1c5%3A0x362358f90bd97e93!2sSaliguri%20Homestay%20Harau!5e0!3m2!1sen!2sid!4v1779008836296!5m2!1sen!2sid"
+              width="600"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen
               loading="lazy"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15960.722470744484!2d100.9403386401825!3d-0.046009990832985256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b48ee6fd28d7%3A0x62dea0b1a9559f31!2sLembah%20Harau!5e0!3m2!1sid!2sid!4v1700000000000"
+              referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
         </div>
