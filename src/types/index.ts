@@ -5,6 +5,9 @@ export type Villa = {
   description: string | null;
   price_per_night: number;
   capacity: number;
+  base_capacity: number;
+  max_capacity: number;
+  extrabed_limit: number;
   floors: number;
   rooms: number;
   beds_description: string | null;
@@ -36,6 +39,7 @@ export type Booking = {
   notes: string | null;
   created_at: string;
   updated_at: string;
+  extrabed_count: number;
 };
 
 export type BookingAddon = {
@@ -67,6 +71,9 @@ export interface Database {
           description: string | null;
           price_per_night: number;
           capacity: number;
+          base_capacity: number;
+          max_capacity: number;
+          extrabed_limit: number;
           floors: number;
           rooms: number;
           beds_description: string | null;
@@ -81,6 +88,9 @@ export interface Database {
           slug: string;
           price_per_night: number;
           capacity: number;
+          base_capacity: number;
+          max_capacity: number;
+          extrabed_limit: number;
         };
         Update: Partial<Database["public"]["Tables"]["villas"]["Row"]>;
       };
@@ -96,6 +106,7 @@ export interface Database {
           check_out: string;
           nights: number;
           guest_count: number;
+          extrabed_count: number;
           villa_price: number;
           addon_total: number;
           grand_total: number;
@@ -116,6 +127,7 @@ export interface Database {
           check_out: string;
           nights: number;
           guest_count: number;
+          extrabed_count: number;
           villa_price: number;
           grand_total: number;
           dp_amount: number;

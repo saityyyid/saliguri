@@ -7,9 +7,28 @@ export async function GET(request: Request) {
   const villaId = Number(url.searchParams.get("villa_id"));
   const start = url.searchParams.get("start");
   const end = url.searchParams.get("end");
+  const guestCount = Number(url.searchParams.get("guest_count") ?? "0");
 
   if (!villaId || !start || !end) {
     return NextResponse.json({ error: "Parameter tidak lengkap." }, { status: 400 });
+  }
+  
+  if (guestCount <= 0) {
+    return NextResponse.json({ error: "Jumlah tamu harus diisi." }, { status: 400 });
+  }
+
+  const { data: villa, error: villaError } = await supabaseAnon
+    .from("villas")
+    .select("max_capacity")
+    .eq("id", villaId)
+    .single();
+
+  if (villaError || !villa) {
+    return NextResponse.json({ error: "Villa tidak ditemukan." }, { status: 404 });
+  }
+
+  if ((villa as any).max_capacity < guestCount) {
+    return NextResponse.json({ available: false });
   }
 
   const { data: booked, error: bookingError } = await supabaseAnon

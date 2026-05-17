@@ -33,28 +33,30 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="min-h-screen bg-cream text-slate-900">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       {sessionLoading && !isLogin ? (
         <div className="container py-20 text-center text-slate-700">Memuat admin…</div>
       ) : (
       <div className="container py-6">
-        <header className="mb-6 flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-soft sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm uppercase text-primary">Admin Saliguri</p>
-            <h1 className="text-2xl font-semibold">Dashboard Reservasi</h1>
-          </div>
-          {!isLogin && (
-            <div className="flex flex-wrap items-center gap-3">
-              <nav className="flex flex-wrap gap-2">
-                <Link className="rounded-full border border-primary px-4 py-2 text-sm text-primary hover:bg-[#eef1e3]" href="/admin">Beranda</Link>
-                <Link className="rounded-full border border-primary px-4 py-2 text-sm text-primary hover:bg-[#eef1e3]" href="/admin/booking">Booking</Link>
-                <Link className="rounded-full border border-primary px-4 py-2 text-sm text-primary hover:bg-[#eef1e3]" href="/admin/kalender">Kalender</Link>
-                <Link className="rounded-full border border-primary px-4 py-2 text-sm text-primary hover:bg-[#eef1e3]" href="/admin/villa">Villa</Link>
-                <Link className="rounded-full border border-primary px-4 py-2 text-sm text-primary hover:bg-[#eef1e3]" href="/admin/profil">Profil</Link>
-              </nav>
-              <Button variant="secondary" onClick={handleSignOut}>Keluar</Button>
+        <header className="mb-6 rounded-[32px] border border-slate-200 bg-white p-6 shadow-soft">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-primary">Admin Saliguri</p>
+              <h1 className="text-3xl font-semibold text-slate-900">Dashboard Reservasi</h1>
             </div>
-          )}
+            {!isLogin && (
+              <div className="flex flex-wrap items-center gap-3">
+                <nav className="flex flex-wrap gap-2">
+                  <Link className="rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm text-slate-900 hover:bg-slate-200" href="/admin">Beranda</Link>
+                  <Link className="rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm text-slate-900 hover:bg-slate-200" href="/admin/booking">Booking</Link>
+                  <Link className="rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm text-slate-900 hover:bg-slate-200" href="/admin/kalender">Kalender</Link>
+                  <Link className="rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm text-slate-900 hover:bg-slate-200" href="/admin/villa">Villa</Link>
+                  <Link className="rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm text-slate-900 hover:bg-slate-200" href="/admin/profil">Profil</Link>
+                </nav>
+                <Button variant="secondary" onClick={handleSignOut}>Keluar</Button>
+              </div>
+            )}
+          </div>
         </header>
         {children}
       </div>

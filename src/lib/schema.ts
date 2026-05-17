@@ -15,6 +15,7 @@ export const bookingCreateSchema = z.object({
   check_in: z.string().min(1, "Tanggal check-in wajib diisi."),
   check_out: z.string().min(1, "Tanggal check-out wajib diisi."),
   guest_count: z.number().min(1, "Jumlah tamu minimal 1."),
+  extrabed_count: z.number().min(0),
   nights: z.number().min(1),
   villa_price: z.number().min(0),
   addon_total: z.number().min(0),

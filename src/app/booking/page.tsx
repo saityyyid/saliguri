@@ -29,13 +29,13 @@ export default async function BookingPage() {
   const villas = await getVillas();
 
   return (
-    <main className="container py-10">
-      <div className="mb-8 rounded-[40px] border border-slate-200 bg-white p-8 shadow-soft">
+    <main className="container py-12">
+      <div className="surface-card mb-10 p-8">
         <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Booking</p>
-        <h1 className="mt-3 text-3xl font-semibold text-slate-900">Reservasi Villa Saliguri</h1>
-        <p className="mt-3 max-w-2xl text-slate-700">Isi data tamu, pilih tanggal, dan unggah bukti pembayaran DP. Admin akan menghubungi Anda via WhatsApp untuk konfirmasi.</p>
+        <h1 className="mt-4 text-3xl font-semibold text-slate-900 sm:text-4xl">Reservasi Villa Saliguri</h1>
+        <p className="mt-4 max-w-2xl text-slate-600">Isi data tamu, pilih tanggal, dan unggah bukti pembayaran. Admin akan mengonfirmasi via WhatsApp setelah menerima reservasi Anda.</p>
       </div>
-      <Suspense fallback={<div className="rounded-[40px] border border-slate-200 bg-white p-8 text-center shadow-soft">Loading form...</div>}>
+      <Suspense fallback={<div className="surface-card p-8 text-center">Loading form...</div>}>
         <BookingForm villas={villas} />
       </Suspense>
     </main>

@@ -40,11 +40,11 @@ export default function AdminProfilePage() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[40px] border border-slate-200 bg-white p-8 shadow-soft">
+      <section className="surface-card p-8">
         <h1 className="text-3xl font-semibold text-slate-900">Profil Admin</h1>
-        <p className="mt-3 text-slate-700">Ubah password akun admin untuk menjaga keamanan dashboard.</p>
+        <p className="mt-3 text-slate-600">Ubah password akun admin untuk menjaga keamanan dashboard.</p>
       </section>
-      <div className="rounded-[40px] border border-slate-200 bg-white p-8 shadow-soft sm:max-w-2xl">
+      <div className="surface-card p-8 sm:max-w-2xl">
         <form onSubmit={handleSubmit} className="space-y-6">
           <label className="space-y-2">
             <span className="text-sm font-medium text-slate-700">Password Baru</span>

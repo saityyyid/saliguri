@@ -26,48 +26,48 @@ export default async function HomePage() {
   const villas = await getVillas();
 
   return (
-    <main className="bg-cream text-slate-900">
-      <section className="container py-10">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-center">
+    <main className="bg-slate-50 text-slate-900">
+      <section className="container py-12">
+        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-center">
           <div className="space-y-6">
             <p className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
               Saliguri Harau Cottage
             </p>
-            <h1 className="max-w-2xl text-4xl font-semibold leading-tight sm:text-5xl">
+            <h1 className="max-w-2xl text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl">
               Pesan villa dan aula nyaman di Lembah Harau, Sumatera Barat.
             </h1>
-            <p className="max-w-xl text-base leading-7 text-slate-700">
-              Nikmati penginapan dekat tebing, air terjun, dan suasana alam Harau dengan sistem reservasi online yang cepat dan aman.
+            <p className="max-w-xl text-base leading-8 text-slate-600">
+              Nikmati pengalaman menginap premium dengan akses cepat ke tebing, air terjun, dan fasilitas keluarga yang lengkap.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Link href="/booking" className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#24450f]">
+              <Link href="/booking" className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#27480f]">
                 Pesan Sekarang
               </Link>
               <Link href="/cek-booking" className="rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
                 Cek Booking
               </Link>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-3xl bg-white p-5 shadow-soft">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="surface-card p-5">
                 <p className="text-sm text-slate-500">Alamat</p>
-                <p className="mt-2 font-semibold">Sarasah Bunta - Harau, Sumatera Barat</p>
+                <p className="mt-3 text-lg font-semibold text-slate-900">Sarasah Bunta - Harau, Sumatera Barat</p>
               </div>
-              <div className="rounded-3xl bg-white p-5 shadow-soft">
+              <div className="surface-card p-5">
                 <p className="text-sm text-slate-500">Kontak</p>
-                <p className="mt-2 font-semibold">WhatsApp: 0813-6800-8800</p>
+                <p className="mt-3 text-lg font-semibold text-slate-900">WhatsApp: 0813-6800-8800</p>
               </div>
             </div>
           </div>
-          <div className="rounded-[40px] border border-slate-200 bg-[#eaf2de] p-6 shadow-soft">
-            <div className="aspect-[4/3] overflow-hidden rounded-[32px] bg-[#d8ead0]" />
+          <div className="surface-card overflow-hidden p-6">
+            <div className="aspect-[4/3] rounded-[32px] bg-[radial-gradient(circle_at_top_left,_rgba(45,80,22,0.18),_transparent_45%),_linear-gradient(180deg,_#eef6e8_0%,_#f8faf6_100%)]" />
           </div>
         </div>
       </section>
 
-      <section className="container py-10">
-        <div className="mb-8 flex flex-col gap-3">
+      <section className="container py-12">
+        <div className="mb-8 space-y-3">
           <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Jenis Villa</p>
-          <h2 className="text-3xl font-semibold">Pilihan Villa Terbaik</h2>
+          <h2 className="text-3xl font-semibold text-slate-900">Pilihan villa terbaik untuk setiap perjalanan</h2>
         </div>
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {villas.map((villa) => (
@@ -76,13 +76,13 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="container py-10">
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+      <section className="container py-12">
+        <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <div className="space-y-5">
             <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Fasilitas Unggulan</p>
-            <h2 className="text-3xl font-semibold">Fasilitas Lengkap untuk Liburan Keluarga</h2>
-            <p className="max-w-2xl text-slate-700">
-              Semua villa dilengkapi AC, WiFi, air panas, dan sarapan pagi. Aula tersedia untuk acara keluarga, ulang tahun, dan rapat.
+            <h2 className="text-3xl font-semibold text-slate-900">Fasilitas lengkap, nyaman, dan terencana</h2>
+            <p className="max-w-2xl text-slate-600">
+              Semua villa dilengkapi AC, WiFi, air panas, dan sarapan pagi. Aula tersedia untuk acara khusus dan pertemuan keluarga.
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
               {[
@@ -93,12 +93,12 @@ export default async function HomePage() {
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3 rounded-3xl bg-white p-4 shadow-soft">
                   <item.icon className="h-5 w-5 text-primary" />
-                  <span>{item.label}</span>
+                  <span className="font-medium text-slate-700">{item.label}</span>
                 </div>
               ))}
             </div>
           </div>
-          <div className="rounded-[40px] border border-slate-200 bg-white p-6 shadow-soft">
+          <div className="surface-card p-6">
             <iframe
               title="Peta Saliguri Harau Cottage"
               className="h-96 w-full rounded-3xl border border-slate-200"
@@ -114,13 +114,13 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="container py-10">
-        <div className="rounded-[32px] bg-primary px-8 py-10 text-white shadow-soft">
+      <section className="container py-12">
+        <div className="surface-card overflow-hidden bg-primary px-8 py-10 text-white">
           <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr] lg:items-center">
             <div>
               <h2 className="text-3xl font-semibold">Butuh bantuan cepat?</h2>
-              <p className="mt-3 max-w-xl text-base leading-7 text-white/90">
-                Hubungi admin Saliguri melalui WhatsApp untuk rekomendasi villa dan konfirmasi ketersediaan.
+              <p className="mt-3 max-w-xl leading-8 text-white/90">
+                Hubungi admin Saliguri untuk rekomendasi cepat, ketersediaan villa, atau informasi acara aula.
               </p>
             </div>
             <Link href="https://wa.me/6281368008800?text=Halo%20Saliguri%20Harau%20Cottage%2C%20saya%20ingin%20memesan." className="inline-flex max-w-max items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary transition hover:bg-slate-100">

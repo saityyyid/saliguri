@@ -97,7 +97,7 @@ export function BookingForm({ villas }: { villas: Villa[] }) {
             next[villa.id] = false;
             return;
           }
-          const res = await fetch(`/api/availability?villa_id=${villa.id}&start=${checkIn}&end=${checkOut}`);
+          const res = await fetch(`/api/availability?villa_id=${villa.id}&start=${checkIn}&end=${checkOut}&guest_count=${guestCount}`);
           const data = await res.json();
           next[villa.id] = data.available ?? false;
         })
@@ -105,7 +105,7 @@ export function BookingForm({ villas }: { villas: Villa[] }) {
       setAvailability(next);
     };
     fetchAvailability();
-  }, [checkIn, checkOut, villas]);
+  }, [checkIn, checkOut, guestCount, villas]);
 
   useEffect(() => {
     if (initialSlug) {
@@ -113,7 +113,7 @@ export function BookingForm({ villas }: { villas: Villa[] }) {
     }
   }, [initialSlug, form]);
 
-  const availableVillas = villas.filter((villa) => availability[villa.id] || villa.slug === "aula");
+  const availableVillas = villas.filter((villa) => (availability[villa.id] ?? true) || villa.slug === "aula");
 
   async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -195,44 +195,58 @@ export function BookingForm({ villas }: { villas: Villa[] }) {
   return (
     <form onSubmit={handleSubmit} className="grid gap-8 lg:grid-cols-[2fr_1fr]">
       <div className="space-y-8">
-        <section className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-soft">
+        <section className="surface-card p-6">
           <h2 className="text-xl font-semibold text-slate-900">1. Pilih Tanggal & Tamu</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <label className="space-y-2">
               <span className="text-sm font-medium text-slate-700">Check-in</span>
-              <input className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3" type="date" value={checkIn || ""} onChange={(event) => form.setValue("check_in", event.target.value)} />
+              <input className="form-input" type="date" value={checkIn || ""} onChange={(event) => form.setValue("check_in", event.target.value)} />
             </label>
             <label className="space-y-2">
               <span className="text-sm font-medium text-slate-700">Check-out</span>
-              <input className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3" type="date" value={checkOut || ""} onChange={(event) => form.setValue("check_out", event.target.value)} />
+              <input className="form-input" type="date" value={checkOut || ""} onChange={(event) => form.setValue("check_out", event.target.value)} />
             </label>
             <label className="space-y-2">
               <span className="text-sm font-medium text-slate-700">Jumlah Tamu</span>
-              <input className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3" type="number" min={1} value={guestCount} onChange={(event) => form.setValue("guest_count", Number(event.target.value))} />
+              <input className="form-input" type="number" min={1} value={guestCount} onChange={(event) => form.setValue("guest_count", Number(event.target.value))} />
             </label>
             <div className="space-y-2">
               <span className="text-sm font-medium text-slate-700">Durasi Menginap</span>
-              <div className="rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3">{form.getValues("nights")} malam</div>
+              <div className="form-input">{form.getValues("nights")} malam</div>
             </div>
           </div>
         </section>
 
-        <section className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-soft">
+        <section className="surface-card p-6">
           <h2 className="text-xl font-semibold text-slate-900">2. Pilih Villa</h2>
           <div className="mt-6 grid gap-4">
-            {availableVillas.map((villa) => (
-              <button key={villa.id} type="button" onClick={() => form.setValue("selected_villa_slug", villa.slug)} className={`rounded-3xl border p-5 text-left transition ${selectedVillaSlug === villa.slug ? "border-primary bg-primary/10" : "border-slate-200 bg-slate-50 hover:border-slate-300"}`}>
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <p className="text-base font-semibold text-slate-900">{villa.name}</p>
-                    <p className="mt-1 text-sm text-slate-600">{formatRupiah(villa.price_per_night)} / malam</p>
+            {availableVillas.map((villa) => {
+              const available = villa.slug === "aula" || (availability[villa.id] ?? true);
+              return (
+                <button
+                  key={villa.id}
+                  type="button"
+                  onClick={() => form.setValue("selected_villa_slug", villa.slug)}
+                  disabled={!available}
+                  className={`rounded-3xl border p-5 text-left transition ${selectedVillaSlug === villa.slug ? "border-primary bg-primary/10" : "border-slate-200 bg-slate-50 hover:border-slate-300"} ${!available ? "cursor-not-allowed opacity-60" : ""}`}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <p className="text-base font-semibold text-slate-900">{villa.name}</p>
+                      <p className="mt-1 text-sm text-slate-600">{formatRupiah(villa.price_per_night)} / malam</p>
+                    </div>
+                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">{villa.capacity} orang</span>
                   </div>
-                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">{villa.capacity} orang</span>
-                </div>
-                <p className="mt-3 text-sm text-slate-700">{villa.beds_description}</p>
-                {villa.slug === "aula" && <p className="mt-3 text-sm text-warning">Harga Custom — Hubungi Admin</p>}
-              </button>
-            ))}
+                  <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-700">
+                    <span className="rounded-full bg-white px-3 py-1 shadow-sm">{villa.floors} lantai</span>
+                    <span className="rounded-full bg-white px-3 py-1 shadow-sm">{villa.rooms} kamar</span>
+                  </div>
+                  <p className="mt-3 text-sm text-slate-600">{villa.beds_description}</p>
+                  {!available && <p className="mt-3 text-sm text-slate-500">Tidak tersedia untuk tanggal atau kapasitas saat ini.</p>}
+                  {villa.slug === "aula" && <p className="mt-3 text-sm text-warning">Harga Custom — Hubungi Admin</p>}
+                </button>
+              );
+            })}
             {villas.length === 0 && <p className="text-slate-600">Sedang memuat data villa...</p>}
           </div>
         </section>

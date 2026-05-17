@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { bookingCreateSchema } from "@/lib/schema";
-import { getSupabaseAnon } from "@/lib/supabase";
+import { createAdminClient } from "@/lib/adminAuth";
 import { sendBookingNotification, bookingEmailHtml } from "@/lib/email";
 
 export async function POST(request: Request) {
@@ -16,8 +16,8 @@ export async function POST(request: Request) {
   const start = values.check_in;
   const end = values.check_out;
 
-  const supabaseAnon = getSupabaseAnon();
-  const { data: booked, error: bookingError } = await supabaseAnon
+  const supabase = createAdminClient();
+  const { data: booked, error: bookingError } = await supabase
     .from("bookings")
     .select("id")
     .eq("villa_id", villaId)
@@ -35,10 +35,32 @@ export async function POST(request: Request) {
   const code = `SAL${Date.now()}`;
   const paymentStatus = values.payment_proof_url ? "dp_paid" : "unpaid";
 
-  const { data: villaData } = await supabaseAnon.from("villas").select("name").eq("id", villaId).single();
+  const { data: villaData } = await supabase
+    .from("villas")
+    .select("name, price_per_night, base_capacity, max_capacity, extrabed_limit")
+    .eq("id", villaId)
+    .single();
   const villaName = (villaData as any)?.name ?? "Villa";
+  const villaPrice = (villaData as any)?.price_per_night ?? values.villa_price;
+  const baseCapacity = (villaData as any)?.base_capacity ?? 0;
+  const maxCapacity = (villaData as any)?.max_capacity ?? 0;
+  const extrabedLimit = (villaData as any)?.extrabed_limit ?? 0;
+  const calculatedExtraBed = Math.max(0, values.guest_count - baseCapacity);
+  if (calculatedExtraBed > extrabedLimit) {
+    return NextResponse.json({ error: `Maksimal ${maxCapacity} orang dengan ${extrabedLimit} extra bed.` }, { status: 400 });
+  }
+  const extraBedPrice = 100000;
+  const extraBedTotal = calculatedExtraBed * extraBedPrice;
+  const expectedGrandTotal = villaPrice * values.nights + values.addon_total + extraBedTotal;
+  if (values.grand_total !== expectedGrandTotal) {
+    return NextResponse.json({ error: "Total pembayaran tidak valid. Silakan periksa ringkasan Anda." }, { status: 400 });
+  }
+  const expectedDp = Math.round(expectedGrandTotal * 0.5);
+  if (values.dp_amount !== expectedDp) {
+    return NextResponse.json({ error: "DP minimal harus 50% dari total pembayaran." }, { status: 400 });
+  }
 
-  const { data: booking, error } = await (supabaseAnon as any)
+  const { data: booking, error } = await (supabase as any)
     .from("bookings")
     .insert({
       booking_code: code,
@@ -50,7 +72,8 @@ export async function POST(request: Request) {
       check_out: values.check_out,
       nights: values.nights,
       guest_count: values.guest_count,
-      villa_price: values.villa_price,
+      extrabed_count: calculatedExtraBed,
+      villa_price: villaPrice,
       addon_total: values.addon_total,
       grand_total: values.grand_total,
       dp_amount: values.dp_amount,
@@ -67,7 +90,7 @@ export async function POST(request: Request) {
   }
 
   if (values.addons?.length) {
-    await (supabaseAnon as any).from("booking_addons").insert(
+    await (supabase as any).from("booking_addons").insert(
       values.addons.map((addon) => ({
         booking_id: booking.id,
         addon_name: addon.addon_name,

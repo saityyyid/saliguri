@@ -35,25 +35,25 @@ export default async function AdminHomePage() {
   return (
     <div className="space-y-8">
       <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="surface-card p-6">
           <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Total Booking</p>
           <p className="mt-4 text-3xl font-semibold text-slate-900">{stats.total}</p>
         </div>
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="surface-card p-6">
           <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Pending</p>
           <p className="mt-4 text-3xl font-semibold text-warning">{stats.pending}</p>
         </div>
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="surface-card p-6">
           <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Confirmed</p>
           <p className="mt-4 text-3xl font-semibold text-success">{stats.confirmed}</p>
         </div>
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="surface-card p-6">
           <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Pendapatan Bulanan</p>
           <p className="mt-4 text-3xl font-semibold text-slate-900">{formatRupiah(stats.monthlyRevenue)}</p>
         </div>
       </div>
 
-      <section className="rounded-[40px] border border-slate-200 bg-white p-6 shadow-soft">
+      <section className="surface-card p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Booking Terbaru</p>

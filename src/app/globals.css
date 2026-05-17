@@ -4,9 +4,9 @@
 
 :root {
   color-scheme: light;
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background-color: #f5f5f0;
-  color: #1f2937;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #f8faf6;
+  color: #0f172a;
 }
 
 html,
@@ -17,7 +17,10 @@ body {
 body {
   margin: 0;
   padding: 0;
-  background: #f5f5f0;
+  background: #f8faf6;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 * {
@@ -36,20 +39,31 @@ select {
   font: inherit;
 }
 
+button,
+input,
+textarea,
+select {
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.25rem;
 }
 
-.shadow-card {
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.08);
+.shadow-soft {
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
 }
 
-.status-pill {
-  @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold;
+.surface-card {
+  @apply rounded-[32px] border border-slate-200 bg-white shadow-soft;
 }
 
-.bg-forest {
-  background: linear-gradient(135deg, #2d5016 0%, #4c6a25 100%);
+.label-strong {
+  @apply text-sm font-semibold text-slate-900;
+}
+
+.form-input {
+  @apply w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20;
 }

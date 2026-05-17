@@ -15,9 +15,9 @@ export default async function AdminBookingPage() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[40px] border border-slate-200 bg-white p-8 shadow-soft">
+      <section className="surface-card p-8">
         <h1 className="text-3xl font-semibold text-slate-900">Manajemen Booking</h1>
-        <p className="mt-3 text-slate-700">Filter, cari, dan konfirmasi booking langsung dari dashboard.</p>
+        <p className="mt-3 text-slate-600">Filter, cari, dan konfirmasi booking langsung dari dashboard.</p>
       </section>
       <BookingsTable bookings={data.bookings} villas={data.villas} />
     </div>
