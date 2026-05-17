@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { supabaseAnon } from "@/lib/supabase";
 import { BookingForm } from "@/components/public/BookingForm";
 import type { Villa } from "@/types";
@@ -26,7 +27,9 @@ export default async function BookingPage() {
         <h1 className="mt-3 text-3xl font-semibold text-slate-900">Reservasi Villa Saliguri</h1>
         <p className="mt-3 max-w-2xl text-slate-700">Isi data tamu, pilih tanggal, dan unggah bukti pembayaran DP. Admin akan menghubungi Anda via WhatsApp untuk konfirmasi.</p>
       </div>
-      <BookingForm villas={villas} />
+      <Suspense fallback={<div className="rounded-[40px] border border-slate-200 bg-white p-8 text-center shadow-soft">Loading form...</div>}>
+        <BookingForm villas={villas} />
+      </Suspense>
     </main>
   );
 }
