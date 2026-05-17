@@ -1,14 +1,17 @@
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import { Suspense } from "react";
-import { supabaseAnon } from "@/lib/supabase";
+import { getSupabaseAnon } from "@/lib/supabase";
 import type { Villa } from "@/types";
 
-const BookingForm = dynamic(
+export const dynamic = "force-dynamic";
+
+const BookingForm = nextDynamic(
   () => import("@/components/public/BookingForm").then((mod) => mod.BookingForm),
   { suspense: true }
 );
 
 async function getVillas() {
+  const supabaseAnon = getSupabaseAnon();
   const { data, error } = await supabaseAnon
     .from("villas")
     .select("*")

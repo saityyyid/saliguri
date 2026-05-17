@@ -1,9 +1,12 @@
 import Link from "next/link";
-import { supabaseAnon } from "@/lib/supabase";
+import { getSupabaseAnon } from "@/lib/supabase";
 import { formatDate, formatRupiah, getWhatsAppLink } from "@/lib/utils";
 import type { Booking } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 async function getBooking(code: string | null) {
+  const supabaseAnon = getSupabaseAnon();
   if (!code) return null;
   const { data, error } = await supabaseAnon
     .from("bookings")

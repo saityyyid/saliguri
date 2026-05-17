@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { ArrowRight, BedSingle, CalendarDays, Home, MapPin, Sparkles, Users } from "lucide-react";
-import { supabaseAnon } from "@/lib/supabase";
+import { getSupabaseAnon } from "@/lib/supabase";
 import { formatRupiah, formatDate } from "@/lib/utils";
 import type { Villa } from "@/types";
 import { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 async function getVilla(slug: string) {
+  const supabaseAnon = getSupabaseAnon();
   const { data, error } = await supabaseAnon
     .from("villas")
     .select("*")

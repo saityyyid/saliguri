@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { bookingCreateSchema } from "@/lib/schema";
-import { supabaseAnon } from "@/lib/supabase";
+import { getSupabaseAnon } from "@/lib/supabase";
 import { sendBookingNotification, bookingEmailHtml } from "@/lib/email";
 
 export async function POST(request: Request) {
@@ -16,6 +16,7 @@ export async function POST(request: Request) {
   const start = values.check_in;
   const end = values.check_out;
 
+  const supabaseAnon = getSupabaseAnon();
   const { data: booked, error: bookingError } = await supabaseAnon
     .from("bookings")
     .select("id")

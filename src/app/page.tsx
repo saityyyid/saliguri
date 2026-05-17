@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { MapPin, Star, Wifi, Coffee, Sparkles, Wind, Shield } from "lucide-react";
-import { supabaseAnon } from "@/lib/supabase";
+import { getSupabaseAnon } from "@/lib/supabase";
 import { VillaCard } from "@/components/public/VillaCard";
 import type { Villa } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 async function getVillas() {
+  const supabaseAnon = getSupabaseAnon();
   const { data, error } = await supabaseAnon
     .from("villas")
     .select("*")

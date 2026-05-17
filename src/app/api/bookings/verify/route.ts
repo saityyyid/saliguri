@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { supabaseAnon } from "@/lib/supabase";
+import { getSupabaseAnon } from "@/lib/supabase";
 
 export async function GET(request: Request) {
+  const supabaseAnon = getSupabaseAnon();
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   const phone = url.searchParams.get("phone");
