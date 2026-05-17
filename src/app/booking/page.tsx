@@ -1,7 +1,12 @@
+import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { supabaseAnon } from "@/lib/supabase";
-import { BookingForm } from "@/components/public/BookingForm";
 import type { Villa } from "@/types";
+
+const BookingForm = dynamic(
+  () => import("@/components/public/BookingForm").then((mod) => mod.BookingForm),
+  { suspense: true }
+);
 
 async function getVillas() {
   const { data, error } = await supabaseAnon
